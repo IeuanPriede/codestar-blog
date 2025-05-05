@@ -6,7 +6,18 @@ from .forms import CollaborateForm
 
 # Create your views here.
 def about_me(request):
-
+    """
+    Renders the most recent information on the webstie author
+    and allows user collabration requests.
+    Displays the most recent :model:`about.About` instance.
+    **Context**
+    ``about``
+        An instance of :model:`about.About`.
+    ``collaborate_form``
+        An instance of :model:`about.CollaborateForm`.
+    **Template:**
+    :template:`about/about.html`
+    """
     if request.method == "POST":
         collaborate_form = CollaborateForm(data=request.POST)
         if collaborate_form.is_valid():
@@ -18,9 +29,6 @@ def about_me(request):
                                     "within 2 working days."
                                  )
             
-    """
-    Renders the About page
-    """
     about = About.objects.all().order_by('-updated_on').first()
     collaborate_form = CollaborateForm()
 
